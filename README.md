@@ -19,4 +19,4 @@ A skill `serie-peaky-shelby` foi recuperada da conversa "Grok API integração v
 2. Coloque essa pasta dentro de `C:\Users\<seu usuário>\.claude\skills\`.
 3. Abra o Claude Code. A skill aparece com o nome `serie-peaky-shelby`.
 
-A skill `codex-imagens` foi reconstruída em 18/11/2026. Só o começo do texto original e as primeiras 60 linhas do programa `gerar.py` apareceram nas conversas. O resto foi reescrito seguindo como ela era usada: os comandos, os `pedido.json` e os logs. O `gerar.py` agora fica dentro da pasta da skill, e foi testado com um Codex simulado, mas ainda não com o Codex de verdade.
+A skill `codex-imagens` foi reconstruída em 18/11/2026. Só o começo do texto original e as primeiras 60 linhas do programa `gerar.py` apareceram nas conversas. O resto foi reescrito seguindo como ela era usada: os comandos, os `pedido.json` e os logs. O `gerar.py` agora fica dentro da pasta da skill. Foi testado com um Codex simulado e, em 18/11/2026, com o Codex de verdade: gerou 1 imagem 9:16 em 42 segundos pela conta do ChatGPT.
