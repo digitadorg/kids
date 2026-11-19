@@ -6,6 +6,7 @@ Cópia de segurança das skills do Claude, para não se perderem se o computador
 |---|---|---|
 | [`serie-peaky-shelby`](skills/serie-peaky-shelby/SKILL.md) | Produz um episódio da série @shelby.explica, do roteiro ao vídeo final, com capas e legenda | ✅ Salva |
 | [`codex-imagens`](skills/codex-imagens/SKILL.md) | O Claude orquestra e o Codex gera imagens em lote (5 de cada vez) pela assinatura do ChatGPT | ✅ Salva, reconstruída |
+| [`saude-do-computador`](skills/saude-do-computador/SKILL.md) | Check-up e manutenção do notebook: varredura, saúde do SSD e da bateria, atualizações, limpeza, DISM/sfc e Defender | ✅ Salva, testada em 18 e 19/11/2026 |
 
 ## De onde veio
 

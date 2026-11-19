@@ -14,7 +14,7 @@ Nunca coloque chaves de API, senhas ou o arquivo `.env` no repositório.
 ## Situação do computador (18/11/2026)
 
 - Notebook Samsung Galaxy Book2 **NP550XED-KT3BR**: Core i3-1215U, 16 GB de RAM, BIOS P11RGK.
-- **SSD NVMe interno de fábrica (256 GB) com defeito**: ele some e volta, e deu o erro `0xc0000218`. Hoje a BIOS e o Windows não enxergam esse disco. Ele está aguardando um técnico para reencaixar ou ler os dados com um adaptador NVMe-USB. **Não formate nem inicialize esse disco se ele aparecer**: primeiro copie a antiga pasta `C:\LAILLA_AUTOMACAO`. Não havia chave de BitLocker na conta Microsoft, então ele provavelmente está sem criptografia.
+- **SSD NVMe interno de fábrica (256 GB) com defeito**: ele some e volta, e deu o erro `0xc0000218`. Hoje a BIOS e o Windows não enxergam esse disco como unidade; o controlador dele (`PCI\VEN_144D&DEV_A809`) aparece com erro e foi **desabilitado** no Gerenciador de Dispositivos em 18/11/2026 (não desinstalado). Inicialização rápida desligada e botão de energia = Desligar desde 18/11/2026. Ele está aguardando um técnico para reencaixar ou ler os dados com um adaptador NVMe-USB. **Não formate nem inicialize esse disco se ele aparecer**: primeiro copie a antiga pasta `C:\LAILLA_AUTOMACAO`. Não havia chave de BitLocker na conta Microsoft, então ele provavelmente está sem criptografia.
 - **Disco atual:** SSD SATA 2,5" de 480 GB (aparece como "P4-480"), no espaço do HD. É o `C:`, com o Windows 11 Pro recém-instalado pela loja.
 - O `C:` está "BitLocker Criptografado", mas com a proteção **desligada** (o menu oferece "Ligar BitLocker"). Não ligue o BitLocker sem o autor salvar a chave de recuperação.
 - A licença de fábrica é **Windows 11 Home** (a chave fica gravada na placa). A loja instalou e ativou a **Pro**. Falta confirmar com a loja se a chave Pro é original. Se não for, o caminho é voltar para a Home, que ativa de graça.
@@ -26,6 +26,7 @@ Nunca coloque chaves de API, senhas ou o arquivo `.env` no repositório.
 |---|---|
 | `skills/serie-peaky-shelby` | Completa. A pasta `modelos\` (com `plano.py`, `narrar.py`, `animar_ep.py`, `montar_ep.py` e os `pedido-*.json`) se perdeu no SSD antigo e precisa ser refeita ou recuperada. Atualize os caminhos de `C:\LAILLA_AUTOMACAO` para a pasta nova. |
 | `skills/codex-imagens` | Reconstruída e testada com o Codex de verdade em 18/11/2026. Requer o Codex CLI (`npm install -g @openai/codex`) e `codex login` com a conta do ChatGPT do autor. O `gerar.py` fica dentro da pasta da skill. |
+| `skills/saude-do-computador` | Criada em 19/11/2026 a partir da manutenção completa do notebook. Scripts em `scripts\`; os relatórios vão para `TITI-AI\manutencao-pc\`. |
 
 Para instalar: copie `skills/<nome>` para `%USERPROFILE%\.claude\skills\<nome>`.
 
