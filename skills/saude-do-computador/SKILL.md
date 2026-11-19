@@ -15,9 +15,11 @@ Scripts em `scripts\` nesta skill. Todos gravam relatórios e logs em `%USERPROF
 2. **Ponto de restauração antes de mudanças grandes.** O Windows só cria 1 por 24 h: se já existe um de hoje, ele reaproveita (avise o autor, não é erro).
 3. **Pergunte antes** de desinstalar programas, desligar serviços ou apagar dados do autor. Apps de fábrica só com a lista aprovada.
 4. **Nunca mexa** em BIOS, partições, BitLocker ou no SSD NVMe antigo (não formatar, não inicializar). Se aparecer atualização de BIOS no Samsung Update, peça para o autor avisar antes.
-5. **Configurações do sistema e de segurança** (modo de energia, inicialização rápida, programas que abrem com o Windows, Defender, Otimização de Entrega, PCIe ASPM): **você não altera**. Abra a tela certa (`Start-Process 'ms-settings:...'`, `devmgmt.msc`, `powercfg.cpl`) e diga exatamente onde clicar. Depois confira se foi salvo (ex.: `HiberbootEnabled` no registro).
-6. **Não instale os drivers opcionais antigos do Windows Update** (Intel de 2018/2019, "Xeon", data 1968). Drivers vêm do **Intel DSA** e do **Samsung Update**.
-7. Mostre o progresso durante tarefas longas (etapa N/M, tempo esperado) sem o autor pedir.
+5. **Não tome a tela do autor.** Ele quer continuar usando o computador enquanto você trabalha. Faça os ajustes **em segundo plano**, por comando (PowerShell, `powercfg`, registro, `winget`), rodando no terminal do app. Computer use (clicar na tela dele) só como último recurso, quando não existir comando, e avisando antes.
+6. **Configurações comuns você pode mudar sem pedir** (autorizado em 19/11/2026): energia, brilho, papel de parede, tema, programas na inicialização, economia de bateria. **Peça antes** só o que é crítico: janela de administrador (o autor precisa clicar em "Sim"), BIOS, partições, BitLocker, desinstalar programas importantes, desligar o Defender ou o firewall. Sempre confira depois se a mudança pegou.
+7. **Codex:** considere usar o `codex.cmd exec` quando ele ajudar de verdade (gerar imagens, tarefas em lote). Ele **não** controla a tela nem clica mais rápido que o Claude, então não use o Codex para cliques.
+8. **Não instale os drivers opcionais antigos do Windows Update** (Intel de 2018/2019, "Xeon", data 1968). Drivers vêm do **Intel DSA**, do **Samsung Update** ou direto do site da Intel (ver passo 9).
+9. Mostre o progresso durante tarefas longas (etapa N/M, tempo esperado) sem o autor pedir.
 
 ## Pegadinhas do ambiente (importante)
 
@@ -53,15 +55,27 @@ Acompanhe `manutencao.log`. Atualização de versão (ex.: 26H2) baixa ~5 GB e i
 **Nunca** apague `SoftwareDistribution\Download` nem rode DISM com reinício pendente.
 Se o autor precisar desligar no meio, pode: sfc e Defender aguentam interrupção. Para retomar, rode só o que faltou (sfc + Defender) e anote na memória o que ficou pendente.
 
-### 7. Telas para o autor ajustar (você guia, ele clica)
-- **Inicialização rápida:** Painel de Controle → Opções de Energia → "Escolher a função dos botões de energia" → "Alterar configurações não disponíveis" → desmarcar → **Salvar alterações**. Conferir `HiberbootEnabled = 0`.
-- **Botão de energia = Desligar** (mesma tela), para o desligamento de verdade à noite.
-- **PCIe ASPM:** Opções de Energia → plano → avançadas → PCI Express → Gerenciamento de Energia do Estado de Link: Desativado (tomada) / Economia moderada (bateria).
-- **Programas na inicialização:** `ms-settings:startupapps` (tirar Teams, Office, Edge).
-- **Hibernação menor:** Terminal (Administrador) → `powercfg /h /type reduced`.
-- **Dispositivo com defeito (ex.: NVMe antigo):** Gerenciador de Dispositivos → botão direito → **Desabilitar** (nunca "Desinstalar").
+### 7. Ajustes do Windows por comando (sem usar a tela do autor)
+Coloque os comandos num `.ps1` e rode pelo terminal (os marcados com 🔒 precisam de administrador: `Start-Process powershell -Verb RunAs ...`). Depois de cada `powercfg /set...`, rode `powercfg /setactive SCHEME_CURRENT`.
 
-### 8. Relatório final
+| Ajuste | Comando |
+|---|---|
+| 🔒 Inicialização rápida desligada | `Set-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Power' HiberbootEnabled 0` |
+| Botão de energia = Desligar | `powercfg /setacvalueindex SCHEME_CURRENT SUB_BUTTONS PBUTTONACTION 3` e o mesmo com `/setdcvalueindex` |
+| PCIe ASPM (evita SSD NVMe "sumir") | `powercfg /setacvalueindex SCHEME_CURRENT SUB_PCIEXPRESS ASPM 0` e `/setdcvalueindex ... ASPM 1` |
+| Não escurecer a tela na economia de bateria | `powercfg /setdcvalueindex SCHEME_CURRENT SUB_ENERGYSAVER ESBRIGHTNESS 100` |
+| 🔒 Hibernação menor (~3 GB livres) | `powercfg /h /type reduced` |
+| 🔒 Desabilitar dispositivo com defeito (nunca desinstalar) | `Disable-PnpDevice -InstanceId '<id>' -Confirm:$false` |
+| Tirar programa da inicialização | valor `03 00 00 00 00 00 00 00 00 00 00 00` em `HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run\<nome>` (apps da Store: `ms-settings:startupapps`) |
+| Modo escuro, transparência, animações, papel de parede | `scripts\trocar-papel.ps1 -Imagem <png>` (papel de parede) e registro `HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize` (`AppsUseLightTheme`/`SystemUsesLightTheme` = 0 para modo escuro, `EnableTransparency` = 1) |
+| Destravar app que não abre (ex.: WhatsApp) | fechar o processo principal **e** os `msedgewebview2.exe` dele (`CommandLine` contém o nome do app) e abrir de novo por `shell:AppsFolder\<AppID>` (`Get-StartApps`). Modelo: `scripts\reiniciar-whatsapp.ps1` |
+
+**Sem comando conhecido** (só pela tela): "Destaques do Windows" no papel de parede, "Alterar brilho com base no conteúdo" (`ms-settings:display`) e as opções do **Intel Graphics Software** (Tela → Economia de energia). Para esses, peça ao autor ou use computer use avisando antes.
+
+### 8. Driver de vídeo Intel direto do site (quando o Intel DSA não abrir)
+O Intel DSA não funciona no navegador do app (ele bloqueia `127.0.0.1`). Para Core de 11ª a 14ª geração, a página é `intel.com/content/www/us/en/download/864990/` ("Intel 11th–14th Gen Processor Graphics"). Pegue o link `downloadmirror.intel.com/.../gfx_win_101.XXXX.exe` e o SHA512 da página, baixe com `curl.exe` para `TITI-AI\drivers\<versão>\`, confira o SHA512 e a assinatura (`Get-AuthenticodeSignature`) e instale como admin com `gfx_win_101.XXXX.exe -s`. Peça OK antes de baixar (nome, origem e tamanho). Modelo pronto: `scripts\driver-intel.ps1` (troque URL, SHA512 e pasta; com `-SoBaixar` baixa e confere, sem o parâmetro instala).
+
+### 9. Relatório final
 Tabela ✅/⚠️ com: o que foi atualizado, espaço liberado, resultado do sfc/DISM/Defender, saúde dos discos, o que o autor ainda precisa fazer e se precisa reiniciar. Guarde uma cópia em `manutencao-pc\`.
 
 ## Rotina recomendada
