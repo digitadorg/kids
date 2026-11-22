@@ -1,27 +1,36 @@
 ---
 name: estilo-aluno-100-homenagem-ceu
-description: Estilo 100 do aluno, "Homenagem no céu". A foto de quem partiu vira um filme 9:16 (jardim, clarão, subida da escada no céu com aceno, abraço no topo), animado pelo Grok Imagine, sem narração, com trilha emotiva e caixa de texto branca. Use quando pedirem "estilo 100", "homenagem no céu", "vídeo de homenagem", "vídeo de luto", "subida ao céu" ou mandarem a foto de alguém que faleceu para virar homenagem.
+description: Estilo 100 do aluno, "Homenagem no céu". O autor manda SÓ A FOTO de uma pessoa e você entrega o vídeo pronto, 9:16, ~18 s (jardim, clarão, subida da escada no céu com aceno, abraço no topo), animado pelo Grok, com a narração fixa na voz dele, trilha e caixa de texto branca. Use quando ele mandar uma foto pedindo homenagem, ou pedir "estilo 100", "homenagem no céu", "vídeo de homenagem", "vídeo de luto", "subida ao céu".
 ---
 
-# Estilo 100 · Homenagem no céu
+# Estilo 100 · Homenagem no céu (padronizado)
 
-Receita completa (tempos, prompts, montagem): `~/Fabrica-de-Criativos/acervo/efeitos-e-estilos/meus-estilos/100-homenagem-ceu/RECEITA.md`. Leia antes de começar.
-Amostra aprovada (22/11/2026): `~/Fabrica-de-Criativos/acervo/referencias/ad-1649926543212861/amostra/amostra-v2.mp4`.
+O autor combinou em 22/11/2026: **ele manda a foto, você faz tudo.** É sempre o mesmo vídeo; só muda a pessoa.
+Receita e tempos: `~/Fabrica-de-Criativos/acervo/efeitos-e-estilos/meus-estilos/100-homenagem-ceu/RECEITA.md`.
 
-## Fluxo
-1. **Entrada:** foto da pessoa (de frente, da cintura para cima ou inteira), nome ou apelido opcional, textos do anúncio. Sem foto, gere uma pessoa fictícia.
-2. **Custo:** cerca de US$ 0,75 por pessoa (3 imagens + 20 s de vídeo). Diga o valor e espere o "pode".
-3. **Imagens** (pasta do pedido em `~/Fabrica-de-Criativos/saidas/<slug>/`):
-   - A (jardim): se a foto é do cliente, ela precisa de uma URL pública para o Grok. Gere A com `images/edits` a partir da foto, ou peça ao autor um link. Sem foto: `python -I grok.py img a.jpg "<prompt A>"`.
-   - B e C: `python -I grok.py img b.jpg "<prompt B>" <URL de A>` e `... c.jpg "<prompt C>" <URL de B>`. O script imprime a URL de cada imagem; guarde as URLs.
-   - Confira as imagens (mesma pessoa e mesma roupa) antes de animar.
-4. **Vídeo:** `python -I grok.py vid v1.mp4 <URL A> 5 "<prompt>"`, `v2.mp4 <URL B> 10`, `v3.mp4 <URL C> 5`. Pode rodar os três em paralelo.
-   Use `PYTHONIOENCODING=utf-8`. O `grok.py` está nesta pasta da skill e lê `XAI_API_KEY` do `.env` sem mostrar o valor.
-5. **Montagem:** ffmpeg conforme a RECEITA (fadewhite, caixas de texto a 56% da altura, trilha, −14 LUFS). Para 2 pessoas, emende os dois blocos com um clarão.
-6. **Entrega:** folha de contato para conferir, depois mande o mp4 com SendUserFile. Para anúncio, entregue em par (ADS "Toque em Saiba mais" e ORG "Comenta HOMENAGEM").
+## Quando chegar uma foto
+1. Salve a foto em `~/Fabrica-de-Criativos/saidas/homenagem/_fotos/<nome>.jpg` (nome curto, sem acento; use o nome da
+   pessoa se ele disser, senão `pessoa-AAAAMMDD-HHMM`).
+2. Avise em 1 linha: "Gerando a homenagem de <nome>. Custo ~R$ 4 (Grok)." O autor já autorizou esse gasto por foto;
+   só pare e pergunte se ele mandar várias fotos de uma vez (diga o total) ou se o saldo do Grok acabar.
+3. Rode (timeout 10 min), a partir da pasta desta skill:
+   `PYTHONIOENCODING=utf-8 python -I homenagem.py "<foto>" --nome <nome>`
+   Ele gera as 3 imagens, confere nada sozinho, anima os 3 clipes em paralelo, monta e imprime `PRONTO <caminho>` e
+   `GASTO_GROK`. Caiu no meio? Rode o mesmo comando de novo: ele pula o que já existe.
+4. **Confira antes de entregar:** abra `imagens.jpg` (a mesma pessoa nas 3 cenas? rosto parecido com a foto?) e
+   `folha.jpg` (aceno e abraço aparecem?). Se uma cena saiu errada, apague só o arquivo dela (ex.: `b.jpg` e `v2.mp4`, e a
+   chave `b` do `estado.json`) e rode de novo. Cada refazer custa ~R$ 1 a 2.
+5. Entregue o `homenagem.mp4` com SendUserFile e diga o gasto em real (US$ × ~5,50).
+
+## O que é fixo
+- Narração (voz do autor, ElevenLabs, já gravada em `assets/n1..n3.mp3`, sem custo por vídeo):
+  "Tem sorrisos que a gente nunca esquece." · "E se você pudesse ver de novo... aquele aceno de quem diz: eu tô bem." ·
+  "Transforme a foto de quem você ama numa homenagem. Toque em Saiba mais."
+- Textos na tela iguais à fala; CTA "Toque em Saiba mais".
+- Trilha `acervo/sons/02-trilhas/07-cinematografico-suave/Cloudbreak__Jobii.wav`, −14 LUFS.
+- `--res 480p` deixa ~30% mais barato (pior qualidade).
 
 ## Regras
-- Cores e fontes da seção "Minha identidade" do CLAUDE.md da Fábrica; vazio = Arial Bold, preto no branco.
-- Não usar texto, música nem imagens da referência original. Escassez só se for real.
-- Foto de pessoa real só com autorização da família.
-- Se a figura religiosa não combinar com o público, troque por "a warm figure of light" no topo.
+- Foto de pessoa real só com autorização da família. Nunca usar texto, música ou imagem da referência original.
+- Se o autor pedir outra fala, gere os 3 mp3 novos com o ElevenLabs (avise que gasta ~200 caracteres da cota) e troque em `assets/`.
+- Se a figura religiosa não combinar com o público, troque "Jesus in a white robe…" por "a warm figure of light" nos prompts.
