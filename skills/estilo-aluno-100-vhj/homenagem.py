@@ -131,20 +131,62 @@ def montar(out):
            "-i", str(AQUI / "assets/n1.mp3"), "-i", str(AQUI / "assets/n2.mp3"), "-i", str(AQUI / "assets/n3.mp3"),
            "-filter_complex", fc, "-map", "[v]", "-map", "[au]", "-t", str(T), "-c:v", "libx264", "-preset", "medium",
            "-crf", "19", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", "homenagem.mp4"]
-    subprocess.run(cmd, cwd=out, check=True)
+    subprocess.run(cmd, cwd=out, check=True, timeout=300)
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", "homenagem.mp4", "-vf",
-                    "fps=1/2.3,scale=200:-2,tile=8x1", "-frames:v", "1", "folha.jpg"], cwd=out, check=True)
+                    "fps=1/2.3,scale=200:-2,tile=8x1", "-frames:v", "1", "folha.jpg"], cwd=out, check=True, timeout=120)
+
+
+def montar_cliente(out, pessoa, datas, mensagem):
+    """VHC: entrega para a família. Sem propaganda e sem narração: nome, datas, mensagem e trilha."""
+    (out / "c1.txt").write_text(pessoa, encoding="utf-8")
+    (out / "c2.txt").write_text(datas, encoding="utf-8")
+    (out / "c3.txt").write_text(mensagem, encoding="utf-8")
+    T = 19.4
+    serif = "C\\:/Windows/Fonts/georgiab.ttf"
+    nome = (f"fontfile='{serif}':fontcolor=white:fontsize=92:borderw=3:bordercolor=black@0.55:shadowcolor=black@0.5:"
+            f"shadowx=0:shadowy=4:x=(w-text_w)/2")
+    pequeno = (f"fontfile='{serif}':fontcolor=white:fontsize=50:borderw=2:bordercolor=black@0.55:x=(w-text_w)/2")
+    msg = (f"fontfile='{serif}':fontcolor=white:fontsize=60:line_spacing=12:text_align=C:borderw=3:"
+           f"bordercolor=black@0.55:shadowcolor=black@0.5:shadowy=4:x=(w-text_w)/2")
+    alfa = lambda a, b: f"alpha='if(lt(t,{a}+0.8),(t-{a})/0.8,if(gt(t,{b}-0.8),({b}-t)/0.8,1))'"
+    esc = lambda i: f"[{i}:v]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,fps=30,setsar=1,format=yuv420p"
+    fc = (f"{esc(0)}[a];{esc(1)}[b];{esc(2)},tpad=stop_mode=clone:stop_duration=1.9[c];"
+          "[a][b]xfade=transition=fadewhite:duration=1.4:offset=3.8[ab];"
+          "[ab][c]xfade=transition=fadewhite:duration=1.0:offset=12.6,eq=brightness=0.02:saturation=1.05,"
+          f"fade=t=out:st={T-1.2}:d=1.2:color=white[x];"
+          f"[x]drawbox=y=ih*0.62:w=iw:h=ih*0.22:c=black@0.32:t=fill:enable='between(t,0.4,4.4)+between(t,13.4,{T-0.6})',"
+          f"drawtext=textfile=c1.txt:{nome}:y=h*0.66:enable='between(t,0.4,4.4)':{alfa(0.4, 4.4)},"
+          f"drawtext=textfile=c2.txt:{pequeno}:y=h*0.66+120:enable='between(t,0.8,4.4)':{alfa(0.8, 4.4)},"
+          f"drawtext=textfile=c3.txt:{msg}:y=h*0.70:enable='between(t,13.4,{T-0.6})':{alfa(13.4, T-0.6)}[v];"
+          "[0:a]volume=0.2[a0];[1:a]volume=0.15[a1];[2:a]volume=0.15,apad=pad_dur=2[a2];"
+          "[a0][a1]acrossfade=d=1.4[a01];[a01][a2]acrossfade=d=1.0[amb];"
+          f"[3:a]atrim=0:{T},asetpts=PTS-STARTPTS,volume=0.6,afade=t=in:d=1.2,afade=t=out:st={T-2.6}:d=2.6[mus];"
+          "[mus][amb]amix=inputs=2:duration=first:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11[au]")
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", "v1.mp4", "-i", "v2.mp4", "-i", "v3.mp4", "-i", str(MUSICA),
+                    "-filter_complex", fc, "-map", "[v]", "-map", "[au]", "-t", str(T), "-c:v", "libx264", "-preset",
+                    "medium", "-crf", "18", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart",
+                    "homenagem.mp4"], cwd=out, check=True, timeout=300)
+    # cópia leve para mandar à família pelo WhatsApp
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", "homenagem.mp4", "-vf", "scale=720:1280", "-c:v", "libx264",
+                    "-profile:v", "main", "-pix_fmt", "yuv420p", "-crf", "23", "-c:a", "aac", "-b:a", "128k",
+                    "-movflags", "+faststart", "homenagem-whatsapp.mp4"], cwd=out, check=True, timeout=300)
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", "homenagem.mp4", "-vf",
+                    "fps=1/2.3,scale=200:-2,tile=9x1", "-frames:v", "1", "folha.jpg"], cwd=out, check=True, timeout=120)
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("foto"); ap.add_argument("--nome"); ap.add_argument("--res", default="720p", choices=["720p", "480p"])
+    ap.add_argument("--cliente", action="store_true", help="VHC: entrega para a família (sem anúncio, sem narração)")
+    ap.add_argument("--pessoa", default="", help="VHC: nome de quem partiu, como vai aparecer")
+    ap.add_argument("--datas", default="", help="VHC: ex. 1948 – 2025")
+    ap.add_argument("--mensagem", default="Para sempre\nem nossos corações", help="VHC: frase final da família")
     a = ap.parse_args()
     if not KEY:
         sys.exit("Falta a chave do Grok: XAI_API_KEY no .env da Fábrica.")
     foto = pathlib.Path(a.foto).expanduser().resolve()
     slug = a.nome or f"{foto.stem}-{datetime.date.today():%Y%m%d}"
-    out = FAB / "saidas" / "homenagem" / slug
+    out = FAB / "saidas" / ("clientes" if a.cliente else "homenagem") / slug
     out.mkdir(parents=True, exist_ok=True)
     estado = json.loads((out / "estado.json").read_text(encoding="utf-8")) if (out / "estado.json").exists() else {}
     print(f"Homenagem · {slug} · saída: {out}", flush=True)
@@ -168,7 +210,11 @@ def main():
         sys.exit("ERRO na animação: " + "; ".join(erros) + " — rode o mesmo comando de novo (o que ficou pronto é pulado).")
 
     print("3/3 Montagem", flush=True)
-    montar(out)
+    if a.cliente:
+        montar_cliente(out, a.pessoa, a.datas, a.mensagem.replace("\\n", "\n"))
+        print(f"WHATSAPP {out / 'homenagem-whatsapp.mp4'}")
+    else:
+        montar(out)
     print(f"PRONTO {out / 'homenagem.mp4'}")
     print(f"GASTO_GROK ~US$ {gasto[0]:.2f} nesta rodada")
 
