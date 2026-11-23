@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Space · Homenagem no céu</title>
+<style>
+:root{--bg:#0f1117;--card:#181b24;--line:#2a2f3d;--ink:#eef0f6;--mut:#8c93a8;--ok:#3fcf7a;--go:#ffb020;--acc:#ffd400}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 "Segoe UI",system-ui,sans-serif;
+background-image:radial-gradient(#ffffff10 1px,transparent 1px);background-size:22px 22px}
+header{padding:16px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);background:#0f1117e6;position:sticky;top:0}
+h1{font-size:19px;margin:0}.live{font-size:12px;font-weight:700;color:#ff5b5b;display:flex;align-items:center;gap:6px}
+.live::before{content:"";width:8px;height:8px;border-radius:50%;background:#ff5b5b;animation:p 1.2s infinite}@keyframes p{50%{opacity:.25}}
+.mut{color:var(--mut)}main{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;padding:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:12px;align-content:start}
+.card h2{margin:0;font-size:16px}.tag{font-size:12px;color:var(--acc);font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.nodes{display:flex;align-items:center;gap:4px;flex-wrap:wrap}.n{font-size:12px;padding:4px 9px;border-radius:20px;border:1px solid var(--line);color:var(--mut)}
+.n.ok{background:#173524;border-color:#245c3c;color:var(--ok)}.n.go{background:#3a2a0d;border-color:#6b4c12;color:var(--go);animation:p 1.4s infinite}
+.arr{color:var(--line)}.agora{font-size:14px}.copy{font-size:13px;color:var(--mut);margin:0;padding-left:18px}
+video{width:100%;max-width:300px;border-radius:10px;background:#000;justify-self:center}img{width:100%;border-radius:8px}
+a{color:var(--acc)}
+</style></head><body>
+<header><h1>Space · Homenagem no céu — anúncios</h1><span class="live">AO VIVO</span><span class="mut" id="hora"></span></header>
+<main id="m"><p class="mut">Esperando o primeiro anúncio começar…</p></main>
+<script>
+const ET=["copy","voz","cortes","legenda","mix","pronto"],NOME={copy:"Copy",voz:"Voz",cortes:"Cortes",legenda:"Legenda",mix:"Mix",pronto:"Pronto"};
+const ESTILO={v1:"Estilo 3 · Letreiro",v2:"Estilo 1 · Antes e depois",v3:"Estilo 19 · Documentário"};
+let ultimo="";
+async function tick(){
+  try{const r=await fetch("estado.json?"+Date.now());if(!r.ok)return;const t=await r.text();document.getElementById("hora").textContent="atualizado "+new Date().toLocaleTimeString();
+    if(t===ultimo)return;ultimo=t;const e=JSON.parse(t);
+    const chaves=Object.keys(e).sort().reverse();
+    document.getElementById("m").innerHTML=chaves.map(k=>{const v=e[k];
+      if(!v)return `<section class="card"><span class="tag">${ESTILO[k]}</span><h2>Na fila</h2><p class="mut">Começa quando o anterior terminar.</p></section>`;
+      const i=ET.indexOf(v.etapa);
+      const nodes=ET.map((s,j)=>`<span class="n ${j<i||v.etapa==="pronto"?"ok":j===i?"go":""}">${NOME[s]}</span>`).join('<span class="arr">→</span>');
+      const erro=v.etapa==="erro"?' style="border-color:#ff5b5b"':"";
+      return `<section class="card"${erro}><span class="tag">${v.estilo||ESTILO[k]||""}</span><h2>${k.toUpperCase()}</h2><div class="nodes">${nodes}</div>
+        <div class="agora">${v.agora||""}</div>
+        ${v.video?`<video src="${v.video}?${Date.now()}" controls playsinline></video><a href="${v.video}" download>Baixar ${v.video}</a>`:""}
+        ${v.folha?`<img src="${v.folha}?${Date.now()}" alt="Quadros do anúncio">`:""}
+        <ol class="copy">${(v.copy||[]).map(c=>`<li>${c}</li>`).join("")}</ol></section>`}).join("");
+  }catch(err){}
+}
+tick();setInterval(tick,2000);
+</script></body></html>

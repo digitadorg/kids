@@ -27,6 +27,8 @@ Nunca coloque chaves de API, senhas ou o arquivo `.env` no repositório.
 | `skills/serie-peaky-shelby` | Completa. A pasta `modelos\` (com `plano.py`, `narrar.py`, `animar_ep.py`, `montar_ep.py` e os `pedido-*.json`) se perdeu no SSD antigo e precisa ser refeita ou recuperada. Atualize os caminhos de `C:\LAILLA_AUTOMACAO` para a pasta nova. |
 | `skills/codex-imagens` | Reconstruída e testada com o Codex de verdade em 18/11/2026. Requer o Codex CLI (`npm install -g @openai/codex`) e `codex login` com a conta do ChatGPT do autor. O `gerar.py` fica dentro da pasta da skill. |
 | `skills/saude-do-computador` | Criada em 19/11/2026 a partir da manutenção completa do notebook. Scripts em `scripts\`; os relatórios vão para `TITI-AI\manutencao-pc\`. |
+| `skills/estilo-aluno-100-vhj` | **VHJ · Vídeos Homenagem com Jesus** (anúncio). A foto vira um vídeo 9:16 (jardim → escada do céu → aceno → abraço em Jesus) com `homenagem.py` (Grok + narração fixa em `assets\`). Em `variacoes\` ficam o `fazer.py` (9 variações de copy/edição: legenda palavra a palavra, palavras gigantes, SFX) e o `index.html` do Space ao vivo. |
+| `skills/estilo-aluno-101-vhc` | **VHC · Vídeo Homenagem para Cliente** (entrega do serviço). Usa o `homenagem.py` do VHJ com `--cliente --pessoa --datas --mensagem`: sem anúncio e sem narração, sai em alta e em versão WhatsApp. |
 
 Para instalar: copie `skills/<nome>` para `%USERPROFILE%\.claude\skills\<nome>`.
 
@@ -38,6 +40,12 @@ Para instalar: copie `skills/<nome>` para `%USERPROFILE%\.claude\skills\<nome>`.
 - **ffmpeg:** montagem, legenda ASS palavra a palavra e loudnorm em −14 LUFS.
 - **raea** e **rea-video** (engenharia reversa de vídeo) estavam instalados no SSD antigo e se perderam.
 - **Fábrica de Criativos:** pacote de skills e comandos (`/fca-instalar`, `/fca-conectar`, `/fca-voz-local` e outros). Reinstalar pelo pacote original devolve dezenas de skills que não foram recuperadas.
+  **Reinstalada em 20/11/2026**, opção Completa + ElevenLabs, em `%USERPROFILE%\Fabrica-de-Criativos` (pacote 2026.10.29; o zip descompactado ficou em `TITI-AI\fca-sistema`). Doutor: 29 OK.
+  - O `remotion render` (Node 26) não descompacta sozinho o Chrome Headless: extraia o zip em `kit\node_modules\.remotion\chrome-headless-shell\win64` e grave um arquivo `VERSION` com `144.0.7559.20`.
+  - Chaves no `.env` da Fábrica: `ELEVENLABS_API_KEY` e `ELEVENLABS_VOICE_ID` (cota grátis esgotada em 22/11, renova em 17/12/2026) e `XAI_API_KEY` (Grok; saldo ~US$ 0,65 em 22/11).
+  - Meus estilos: **100 · VHJ** e **101 · VHC** (ver skills acima). Custo por foto: ~US$ 0,70 no Grok (~R$ 4).
+  - Os 9 anúncios VHJ prontos ficam em `Fabrica-de-Criativos\saidas\homenagem\variacoes\` (e cópias de WhatsApp em `Downloads`).
+  - Todo ffmpeg com tempo máximo: um comando com vídeo + legenda + ~10 áudios travou em silêncio. Faça o mix do áudio num comando e o vídeo em outro.
 
 ## Preferências do autor (memórias recuperadas)
 
