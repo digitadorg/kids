@@ -6,6 +6,7 @@ Cópia de segurança das skills do Claude, para não se perderem se o computador
 |---|---|---|
 | [`serie-peaky-shelby`](skills/serie-peaky-shelby/SKILL.md) | Produz um episódio da série @shelby.explica, do roteiro ao vídeo final, com capas e legenda | ✅ Salva |
 | [`codex-imagens`](skills/codex-imagens/SKILL.md) | O Claude orquestra e o Codex gera imagens em lote (5 de cada vez) pela assinatura do ChatGPT | ✅ Salva, reconstruída |
+| [`codex-ajudante`](skills/codex-ajudante/SKILL.md) | O Claude orquestra e manda tarefas básicas para o Codex (`codex exec`) em segundo plano, depois confere | ✅ Salva, testada |
 | [`saude-do-computador`](skills/saude-do-computador/SKILL.md) | Check-up e manutenção do notebook: varredura, saúde do SSD e da bateria, atualizações, limpeza, DISM/sfc e Defender | ✅ Salva, testada em 18 e 19/11/2026 |
 | [`estilo-aluno-100-vhj`](skills/estilo-aluno-100-vhj/SKILL.md) | **VHJ** · Vídeos Homenagem com Jesus: a foto vira anúncio 9:16 (jardim, escada do céu, aceno, abraço), Grok + narração | ✅ Salva, 22/11/2026 |
 | [`estilo-aluno-101-vhc`](skills/estilo-aluno-101-vhc/SKILL.md) | **VHC** · Vídeo Homenagem para Cliente: entrega para a família, com nome, datas e mensagem, sem anúncio | ✅ Salva, testada sem custo em 22/11/2026 |
