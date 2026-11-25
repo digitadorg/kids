@@ -14,24 +14,22 @@ Só dados públicos aqui (o repo de skills é público). Detalhes completos, his
 - Cliente manda foto de alguém que faleceu → prévia grátis com IA (pessoa ao pé de uma escadaria celestial, Jesus no alto de braços abertos) → compra o vídeo completo, entregue depois pelo WhatsApp.
 - Público: adultos 35+, cristãos, enlutados. Tom acolhedor, sem explorar a dor, sem promessa espiritual.
 - Domínio: https://memoriasvivas.app.br · Pixel Meta `964640486589755` · WhatsApp `559881692723`.
-- Modelo de imagem escolhido: `gpt-image-2`, qualidade `medium` (não trocar sem autorização).
+- Modelo de imagem: `gpt-image-2.6-sunburst` (desde 25/11/2026, pedido do dono), qualidade `medium`. Cenário: Jesus de braços abertos na escadaria de mármore com portão dourado; estilo UGC realista. Não trocar sem autorização.
 - O vídeo final é feito com as skills `estilo-aluno-101-vhc` (cliente) e `estilo-aluno-100-vhj` (anúncio).
 
 ## Versões (separadas; uma não substitui a outra)
 
 | Versão | Preço | Pagamento | Rastreamento |
 |---|---|---|---|
-| A — funil de anúncios | **oficial: R$19,90 + foto bônus, PIX Mercado Pago** (confirmado pelo dono em 25/11/2026; antes R$67,90 Cakto) | PIX na página | Pixel + CAPI + webhook |
+| A — funil de anúncios | **no ar desde 25/11/2026: R$67,90, checkout Cakto** (antes: R$19,90 Mercado Pago) | checkout Cakto | FOP (Pixel + CAPI) + webhook Cakto |
 | B — atendimento WhatsApp | R$49,90, 1 pessoa | volta ao WhatsApp | não |
 | C — atendimento WhatsApp | R$67,90, 1 pessoa | volta ao WhatsApp | não |
 
-## Avisos (auditoria 25/11/2026)
+## Situação (25/11/2026)
 
-- A versão no ar é a Cakto com **só valor e gateway trocados** pelo dono. O código local ainda é a versão Cakto R$67,90; o código da versão Mercado Pago não está no computador.
-- Página de obrigado no ar mostra R$39,90 (diferente dos R$19,90) — pendente de decisão.
-- Na troca para o Mercado Pago, o site parou de disparar **InitiateCheckout e AddPaymentInfo** (vinham do webhook da Cakto) e o Purchase ficou só no navegador → a régua 80×10×10 está incompleta. Ler com AddToCart no lugar de IC até corrigir (skill `metricas-80-10-10`).
-- Mídias do Cloudinary (`res.cloudinary.com/pgy61ab9`) respondem 401.
-- Versões B e C: arquivos não encontrados.
-- Nada de deploy, preço, gateway ou Pixel sem o "pode" do dono.
+- No ar: versão Cakto R$67,90 com FOP puro, painel `/painel` (senha só no computador do dono), carrossel, obrigado sem WhatsApp.
+- Publicar: rodar `09-PUBLICACAO/preparar_publicacao.py` e depois o deploy da pasta `09-PUBLICACAO/memoriasvivas-app-br` (já vinculada ao projeto Netlify `bobiegoodscristao`). Rascunho antes, produção só com o "pode publicar".
+- Pendente: ZapData (número desconectado, fluxo inativo criado) e chave da API da Cakto.
+- Nada de deploy, preço, gateway, Pixel ou modelo sem o "pode" do dono.
 
 Skills técnicas: `mestre-saas` coordena as demais; rastreamento = `fop-tracking` (prioridade); métricas = `metricas-80-10-10`.
