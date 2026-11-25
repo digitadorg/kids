@@ -10,6 +10,15 @@ Cópia de segurança das skills do Claude, para não se perderem se o computador
 | [`saude-do-computador`](skills/saude-do-computador/SKILL.md) | Check-up e manutenção do notebook: varredura, saúde do SSD e da bateria, atualizações, limpeza, DISM/sfc e Defender | ✅ Salva, testada em 18 e 19/11/2026 |
 | [`estilo-aluno-100-vhj`](skills/estilo-aluno-100-vhj/SKILL.md) | **VHJ** · Vídeos Homenagem com Jesus: a foto vira anúncio 9:16 (jardim, escada do céu, aceno, abraço), Grok + narração | ✅ Salva, 22/11/2026 |
 | [`estilo-aluno-101-vhc`](skills/estilo-aluno-101-vhc/SKILL.md) | **VHC** · Vídeo Homenagem para Cliente: entrega para a família, com nome, datas e mensagem, sem anúncio | ✅ Salva, testada sem custo em 22/11/2026 |
+| [`mestre-saas`](skills/mestre-saas/SKILL.md) | Coordena micro-SaaS com IA + Netlify + pagamentos + Meta: auditar antes de mexer, qual skill usar, regras de ouro | ✅ Criada 25/11/2026 |
+| [`netlify-serverless`](skills/netlify-serverless/SKILL.md) | Functions modernas, Background Functions, Blobs (getStore dentro do handler), variáveis e diagnóstico | ✅ Criada 25/11/2026 |
+| [`ai-image-pipeline`](skills/ai-image-pipeline/SKILL.md) | Upload → Sharp → Blobs → OpenAI images/edits → marca-d'água → status/progresso | ✅ Criada 25/11/2026 |
+| [`meta-tracking-capi`](skills/meta-tracking-capi/SKILL.md) | Pixel + CAPI, mapa de eventos, deduplicação por event_id, hash, UTMs e atribuição | ✅ Criada 25/11/2026 |
+| [`cakto-webhook`](skills/cakto-webhook/SKILL.md) | Webhook de pagamento com resposta rápida + background, segredo, idempotência | ✅ Criada 25/11/2026 |
+| [`funnel-cro`](skills/funnel-cro/SKILL.md) | Página, oferta, pós-prévia, provas sociais, versão WhatsApp e métricas 80×10×10 | ✅ Criada 25/11/2026 |
+| [`saas-deploy-safe`](skills/saas-deploy-safe/SKILL.md) | Deploy e rollback na Netlify conferindo site, Site ID e variáveis | ✅ Criada 25/11/2026 |
+| [`saas-qa`](skills/saas-qa/SKILL.md) | Testes, homologação, regressão e segurança | ✅ Criada 25/11/2026 |
+| [`memorias-vivas-context`](skills/memorias-vivas-context/SKILL.md) | Contexto público do Memórias Vivas e onde ficam código e documentação | ✅ Criada 25/11/2026 |
 
 ## De onde veio
 
