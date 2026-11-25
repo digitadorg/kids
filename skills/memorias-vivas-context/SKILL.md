@@ -21,13 +21,14 @@ Só dados públicos aqui (o repo de skills é público). Detalhes completos, his
 
 | Versão | Preço | Pagamento | Rastreamento |
 |---|---|---|---|
-| A — funil de anúncios | histórico R$67,90 Cakto; **no ar em 25/11/2026: R$19,90 + foto bônus, PIX Mercado Pago** | checkout | Pixel + CAPI + webhook |
+| A — funil de anúncios | **oficial: R$19,90 + foto bônus, PIX Mercado Pago** (confirmado pelo dono em 25/11/2026; antes R$67,90 Cakto) | PIX na página | Pixel + CAPI + webhook |
 | B — atendimento WhatsApp | R$49,90, 1 pessoa | volta ao WhatsApp | não |
 | C — atendimento WhatsApp | R$67,90, 1 pessoa | volta ao WhatsApp | não |
 
 ## Avisos (auditoria 25/11/2026)
 
-- Código local = versão Cakto R$67,90; **não é o que está no ar**. Código da versão Mercado Pago não está no computador.
+- A versão no ar é a Cakto com **só valor e gateway trocados** pelo dono. O código local ainda é a versão Cakto R$67,90; o código da versão Mercado Pago não está no computador.
+- Página de obrigado no ar mostra R$39,90 (diferente dos R$19,90) — pendente de decisão.
 - Mídias do Cloudinary (`res.cloudinary.com/pgy61ab9`) respondem 401.
 - Versões B e C: arquivos não encontrados.
 - Nada de deploy, preço, gateway ou Pixel sem o "pode" do dono.
