@@ -29,8 +29,9 @@ Só dados públicos aqui (o repo de skills é público). Detalhes completos, his
 
 - A versão no ar é a Cakto com **só valor e gateway trocados** pelo dono. O código local ainda é a versão Cakto R$67,90; o código da versão Mercado Pago não está no computador.
 - Página de obrigado no ar mostra R$39,90 (diferente dos R$19,90) — pendente de decisão.
+- Na troca para o Mercado Pago, o site parou de disparar **InitiateCheckout e AddPaymentInfo** (vinham do webhook da Cakto) e o Purchase ficou só no navegador → a régua 80×10×10 está incompleta. Ler com AddToCart no lugar de IC até corrigir (skill `metricas-80-10-10`).
 - Mídias do Cloudinary (`res.cloudinary.com/pgy61ab9`) respondem 401.
 - Versões B e C: arquivos não encontrados.
 - Nada de deploy, preço, gateway ou Pixel sem o "pode" do dono.
 
-Skills técnicas: `mestre-saas` coordena as demais.
+Skills técnicas: `mestre-saas` coordena as demais; rastreamento = `fop-tracking` + `meta-tracking-capi`; métricas = `metricas-80-10-10`.

@@ -20,7 +20,9 @@ Upload JPG, PNG, WEBP, HEIC, AVIF → status até `complete` → prévia com mar
 
 ## Rastreamento (com `META_TEST_EVENT_CODE`)
 
-Cada evento do navegador aparece **uma vez** (navegador + servidor deduplicados). Remover a variável e republicar ao final.
+Checklist pós-deploy da skill `fop-tracking`: ordem dos eventos, cada um 2× (Browser + Server) **deduplicado**, EMQ ≥ 6 (meta ≥ 8), fbp/fbc crus no servidor. Conferir também que **InitiateCheckout, AddPaymentInfo e Purchase existem** no gateway atual. Remover `META_TEST_EVENT_CODE` e republicar ao final.
+
+Teste automatizado do Pixel: o Meta bloqueia robô — Playwright headless não envia `/tr`. Usar `headless=False`, `--disable-blink-features=AutomationControlled`, `navigator.webdriver` mascarado, e conferir o POST `/tr`. `fbq.getState()` não prova envio.
 
 ## Webhook (com autorização; usar o "enviar teste" do gateway)
 

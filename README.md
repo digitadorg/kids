@@ -13,9 +13,10 @@ Cópia de segurança das skills do Claude, para não se perderem se o computador
 | [`mestre-saas`](skills/mestre-saas/SKILL.md) | Coordena micro-SaaS com IA + Netlify + pagamentos + Meta: auditar antes de mexer, qual skill usar, regras de ouro | ✅ Criada 25/11/2026 |
 | [`netlify-serverless`](skills/netlify-serverless/SKILL.md) | Functions modernas, Background Functions, Blobs (getStore dentro do handler), variáveis e diagnóstico | ✅ Criada 25/11/2026 |
 | [`ai-image-pipeline`](skills/ai-image-pipeline/SKILL.md) | Upload → Sharp → Blobs → OpenAI images/edits → marca-d'água → status/progresso | ✅ Criada 25/11/2026 |
-| [`meta-tracking-capi`](skills/meta-tracking-capi/SKILL.md) | Pixel + CAPI, mapa de eventos, deduplicação por event_id, hash, UTMs e atribuição | ✅ Criada 25/11/2026 |
+| [`meta-tracking-capi`](skills/meta-tracking-capi/SKILL.md) | Complemento da `fop-tracking` (Fábrica) para SaaS com prévia + gateway: Template F de eventos, Purchase pelo webhook, atribuição | ✅ Criada 25/11/2026, alinhada ao FOP |
+| [`metricas-80-10-10`](skills/metricas-80-10-10/SKILL.md) | Régua 80 × 10 × 10 + métricas FOP (Hook, Hold, Qualify, Close) + conta do CPA/ROAS de empate | ✅ Criada 25/11/2026 |
 | [`cakto-webhook`](skills/cakto-webhook/SKILL.md) | Webhook de pagamento com resposta rápida + background, segredo, idempotência | ✅ Criada 25/11/2026 |
-| [`funnel-cro`](skills/funnel-cro/SKILL.md) | Página, oferta, pós-prévia, provas sociais, versão WhatsApp e métricas 80×10×10 | ✅ Criada 25/11/2026 |
+| [`funnel-cro`](skills/funnel-cro/SKILL.md) | Página, oferta, pós-prévia, provas sociais e versão WhatsApp (métricas na `metricas-80-10-10`) | ✅ Criada 25/11/2026 |
 | [`saas-deploy-safe`](skills/saas-deploy-safe/SKILL.md) | Deploy e rollback na Netlify conferindo site, Site ID e variáveis | ✅ Criada 25/11/2026 |
 | [`saas-qa`](skills/saas-qa/SKILL.md) | Testes, homologação, regressão e segurança | ✅ Criada 25/11/2026 |
 | [`memorias-vivas-context`](skills/memorias-vivas-context/SKILL.md) | Contexto público do Memórias Vivas e onde ficam código e documentação | ✅ Criada 25/11/2026 |
