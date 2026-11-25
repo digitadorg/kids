@@ -34,4 +34,4 @@ Só dados públicos aqui (o repo de skills é público). Detalhes completos, his
 - Versões B e C: arquivos não encontrados.
 - Nada de deploy, preço, gateway ou Pixel sem o "pode" do dono.
 
-Skills técnicas: `mestre-saas` coordena as demais; rastreamento = `fop-tracking` + `meta-tracking-capi`; métricas = `metricas-80-10-10`.
+Skills técnicas: `mestre-saas` coordena as demais; rastreamento = `fop-tracking` (prioridade); métricas = `metricas-80-10-10`.

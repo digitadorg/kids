@@ -1,11 +1,11 @@
 ---
 name: metricas-80-10-10
-description: Régua de métricas de funil do autor para Meta Ads — 80 × 10 × 10 (Connect Rate 80%, conversão da página 10%, conversão do checkout 10%, conversão global 1%) integrada às métricas FOP (Hook Rate, Hold Rate, Qualify Rate, Close Rate) e às métricas de micro-SaaS com prévia grátis (custo de prévia por venda, CPA máximo, custo máximo por visita). Use ao analisar campanha, achar o gargalo do funil, montar colunas personalizadas no Gerenciador de Anúncios, calcular se a oferta paga o tráfego, ou quando o autor falar "80 10 10", "1% de conversão", "connect rate", "onde está travando".
+description: Complemento da skill fop-tracking (que é a PRIORIDADE para Pixel, CAPI e métricas FOP) — acrescenta a régua do autor 80 × 10 × 10 (Connect Rate 80%, conversão da página 10%, conversão do checkout 10%, conversão global 1%) integrada às métricas FOP (Hook Rate, Hold Rate, Qualify Rate, Close Rate) e às métricas de micro-SaaS com prévia grátis (custo de prévia por venda, CPA máximo, custo máximo por visita). Use ao analisar campanha, achar o gargalo do funil, montar colunas personalizadas no Gerenciador de Anúncios, calcular se a oferta paga o tráfego, ou quando o autor falar "80 10 10", "1% de conversão", "connect rate", "onde está travando".
 ---
 
-# Métricas — régua 80 × 10 × 10 + FOP
+# Métricas — régua 80 × 10 × 10 (complemento do FOP)
 
-Uma régua só, de cima (criativo) para baixo (caixa). Cada linha diz **onde** está o problema. Rastreamento dos eventos: skill `fop-tracking` (base) + `meta-tracking-capi` (ajustes).
+**A skill `fop-tracking` é a prioridade**: hierarquia de eventos, Pixel + CAPI, Advanced Matching, EMQ e as métricas FOP (Hook, Hold, Connect, Qualify, Close). Esta skill só acrescenta o que o FOP não tem: a régua 80 × 10 × 10 com o **1% de conversão global**, os degraus de um funil com prévia grátis, a conta do dinheiro e a leitura de atribuição. Em conflito, vale o FOP.
 
 ## 1. A régua completa
 
@@ -67,7 +67,15 @@ ROAS do Meta não é lucro: não desconta taxa, IA, produção, imposto, reembol
 5. Ataque **um gargalo por vez**, o mais alto da régua primeiro (criativo → página → checkout).
 6. Otimização da campanha: Purchase. Os demais eventos são diagnóstico e sinal; não há garantia de que mais eventos melhoram a entrega.
 
-## 6. Colunas personalizadas sugeridas (Gerenciador de Anúncios)
+## 6. Atribuição (o FOP não cobre)
+
+- UTM padrão do autor em todo anúncio, inclusive duplicados: `utm_source=fb&utm_medium=paid&utm_campaign={{campaign.id}}&utm_content={{ad.id}}&utm_term={{adset.id}}`.
+- Orgânico: `utm_medium=organic`; atendimento: `utm_source=whatsapp&utm_medium=atendimento`.
+- `fbp` sozinho não prova anúncio; `fbclid` não prova pago; sem UTM = origem desconhecida.
+- Venda aprovada no gateway ≠ Purchase enviado ≠ recebido pela Meta ≠ atribuído a anúncio. O gateway é a verdade do dinheiro; a Meta, da atribuição (dentro das janelas dela). Nunca forçar atribuição.
+- Purchase vem do webhook do gateway (skill `cakto-webhook`) com `event_id` igual ao do navegador, se o navegador também mandar. Trocou de gateway? Confira se InitiateCheckout e AddPaymentInfo continuam existindo.
+
+## 7. Colunas personalizadas sugeridas (Gerenciador de Anúncios)
 
 `HOOK %` · `HOLD %` · `CONNECT %` · `% PÁGINA (IC/LPV)` · `% CHECKOUT (PUR/IC)` · `% GLOBAL (PUR/LPV)` · `% LEAD` · `% PRÉVIA OK (CP/LEAD)` · `% CTA PÓS-PRÉVIA (ATC/CP)` · `CPA` · `ROAS`.
 CustomizeProduct aparece como "Personalizações de produto"; conferir o nome exato na conta.

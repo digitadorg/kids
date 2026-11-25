@@ -24,8 +24,8 @@ Conhecimento **genérico**. Dados de um projeto específico (marca, preço, Pixe
 |---|---|
 | Functions, Background Functions, Blobs, variáveis, logs | `netlify-serverless` |
 | Upload, Sharp, prompt, OpenAI imagem, marca-d'água, progresso | `ai-image-pipeline` |
-| Pixel, CAPI, eventos, EMQ, deduplicação | `fop-tracking` (base) + `meta-tracking-capi` (prévia + gateway) |
-| Métricas, gargalo, 80×10×10, CPA/ROAS de empate | `metricas-80-10-10` |
+| Pixel, CAPI, eventos, EMQ, deduplicação | **`fop-tracking`** (prioridade) |
+| Métricas, gargalo, 80×10×10, 1% global, CPA/ROAS de empate, atribuição | `metricas-80-10-10` (complemento do FOP) |
 | Webhook de gateway (Cakto e similares), idempotência | `cakto-webhook` |
 | Página, oferta, CTA, provas sociais, métricas de conversão | `funnel-cro` |
 | Deploy, vínculo Netlify, rollback | `saas-deploy-safe` |
